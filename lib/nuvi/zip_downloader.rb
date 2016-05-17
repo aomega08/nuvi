@@ -28,6 +28,8 @@ module Nuvi
 
         FileUtils.mv(tmp_file, destination)
       end
+
+      destination
     end
 
     private

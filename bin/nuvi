@@ -3,4 +3,4 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'nuvi'
 
-Nuvi.add_to_redis('http://feed.omgili.com/5Rh5AMTrc4Pv/mainstream/posts/')
+Nuvi.start('http://feed.omgili.com/5Rh5AMTrc4Pv/mainstream/posts/')
