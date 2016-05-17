@@ -2,6 +2,10 @@
 
 This repository contains the code for the NUVI interview project.
 
+## Usage
+
+    ./bin/nuvi [-r REDIS_HOST] [-p REDIS_PORT]
+
 ## How it works
 
 My first attempt was to download the whole HTTP directory in one shot, unzipping all the files,
