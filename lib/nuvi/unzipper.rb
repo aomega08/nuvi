@@ -13,8 +13,9 @@ module Nuvi
       FileUtils.rm_rf(destination)
       FileUtils.mkdir_p(destination)
 
+      Nuvi.logger.info("Unzipping #{file} to #{destination}")
+
       begin
-        Nuvi.logger.info("Unzipping #{file} to #{destination}")
         Zip::File.open(file) do |zip_file|
           zip_file.each do |entry|
             entry.extract(File.join(destination, entry.name))

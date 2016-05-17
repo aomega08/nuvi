@@ -9,6 +9,7 @@ module Nuvi
   extend self
 
   def start(base_url)
+    # Get the list of zip files from the HTTP directory
     index = ZipIndex.new(base_url)
     zip_urls = index.zip_urls
     logger.debug("Found #{zip_urls.count} zip files")
@@ -17,18 +18,16 @@ module Nuvi
   end
 
   def process(zip)
+    # Save the zip file to a tmp directory
     zip_file = downloader.download(zip)
-    xml_files_directory = Unzipper.new.unzip(zip_file)
+
+    # Extract the zip file and get the target directory
+    xml_files_directory = unzipper.unzip(zip_file)
 
     xmls = Dir[File.join(xml_files_directory, '*.xml')]
 
-    new_items = 0
-    xmls.each do |xml_file|
-      if process_xml(xml_file)
-        new_items += 1
-      end
-    end
-
+    # Process file by file and count the new items
+    new_items = xmls.map { |xml_file| process_xml(xml_file) }.compact.inject(:+)
     logger.info("Added #{new_items} new items to the NEWS_XML list")
 
     # Cleanup the zip files
@@ -38,7 +37,8 @@ module Nuvi
     # Since the software has to be run multiple times, and the zip files are
     # quite large, it is nice to have a local cache.
     # The ZipDownloader class does nothing when the zip file is already there.
-    #File.delete(zip_file)
+
+    # File.delete(zip_file)
   end
 
   # How it works:
@@ -70,6 +70,10 @@ module Nuvi
 
   def downloader
     @downloader ||= ZipDownloader.new
+  end
+
+  def unzipper
+    @unzipper ||= Unzipper.new
   end
 
   attr_writer :redis_host, :redis_port
