@@ -1,0 +1,2 @@
+module Nuvi
+end
