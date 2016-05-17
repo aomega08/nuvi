@@ -5,7 +5,6 @@ require 'optparse'
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'nuvi'
 
-options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: ./bin/nuvi [options]'
 

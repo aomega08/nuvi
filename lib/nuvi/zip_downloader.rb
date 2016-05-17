@@ -22,7 +22,7 @@ module Nuvi
 
         tmp_file = "#{destination}.downloading"
         http = Net::HTTP.new(uri.host, uri.port)
-        response = http.request(Net::HTTP::Get.new(uri)) do |response|
+        http.request(Net::HTTP::Get.new(uri)) do |response|
           save_response(response, tmp_file)
         end
 
@@ -37,17 +37,15 @@ module Nuvi
     # Downloads the file writing chunk by chunk instead of loading the whole
     # file into memory.
     def save_response(response, destination)
-      begin
-        open(destination, 'w') do |file|
-          response.read_body do |chunk|
-            file.write(chunk)
-          end
+      open(destination, 'w') do |file|
+        response.read_body do |chunk|
+          file.write(chunk)
         end
-      rescue StandardError, Interrupt
-        # Delete the tmp file and keep exploding!
-        File.delete(destination) if File.exist?(destination)
-        raise
       end
+    rescue StandardError, Interrupt
+      # Delete the tmp file and keep exploding!
+      File.delete(destination) if File.exist?(destination)
+      raise
     end
   end
 end
