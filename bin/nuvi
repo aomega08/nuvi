@@ -7,17 +7,17 @@ require 'nuvi'
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: ./bin/nuvi [options]"
+  opts.banner = 'Usage: ./bin/nuvi [options]'
 
-  opts.on("-r", "--redis HOST", "Redis host") do |host|
+  opts.on('-r', '--redis HOST', 'Redis host') do |host|
     Nuvi.redis_host = host
   end
 
-  opts.on("-p", "--port PORT", "Redis port") do |port|
+  opts.on('-p', '--port PORT', 'Redis port') do |port|
     Nuvi.redis_port = port.to_i
   end
 
-  opts.on_tail("-h", "--help", "Show this message") do
+  opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit
   end
